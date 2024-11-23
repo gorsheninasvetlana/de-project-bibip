@@ -139,6 +139,10 @@ class TestCarServiceScenarios:
         self._fill_initial_data(service, car_data, model_data)
 
         available_cars = [car for car in car_data if car.status == CarStatus.available]
+        # Сортировка обоих списков по VIN для одинакового порядка
+        available_cars.sort(key=lambda car: car.vin)  # Сортируем ожидаемые данные
+        returned_cars = service.get_cars(CarStatus.available)
+        returned_cars.sort(key=lambda car: car.vin)  # Сортируем возвращенные данные
 
         assert service.get_cars(CarStatus.available) == available_cars
 
